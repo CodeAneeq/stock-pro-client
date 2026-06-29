@@ -29,7 +29,7 @@ export default function SalesTable({
           <li className="text-center py-10 text-gray-400 text-sm">No orders yet.</li>
         ) : (
           invoices.map((item) => (
-            <li key={item._id} className="flex items-center gap-3 px-4 py-3.5">
+            <li key={item._id} className="flex items-center gap-3 px-4 py-3.5 max-[370px]:px-1">
 
               <div className="w-9 h-9 rounded-full bg-blue-50 text-blue-600 font-bold text-sm flex items-center justify-center shrink-0 uppercase">
                 {item.customerName.charAt(0)}
@@ -41,15 +41,23 @@ export default function SalesTable({
                   <span className="text-[10px] font-semibold text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded max-[430px]:text-[6px]">
                     {item._id}
                   </span>
-                  <span className="text-xs text-gray-400 max-[340px]:text-[10px]">{item?.createdAt?.replace("T", "")?.slice(0, 9)}</span>
+                  <span className="text-xs text-gray-400 max-[480px]:text-[10px]">{item?.createdAt?.replace("T", "")?.slice(0, 9)}</span>
                 </div>
               </div>
 
               <div className="text-right shrink-0">
-                <p className="text-sm font-bold text-gray-800 max-[340px]:text-[10px]">
+                <p className="text-sm font-bold text-gray-800 max-[470px]:text-[10px]">
                   Rs. {Number(item.grandTotal).toLocaleString()}
                 </p>
               </div>
+
+                 <button
+                              onClick={() => onDel?.(item)}
+                              className="text-red-400 hover:text-red-600 transition-colors p-1.5 rounded-lg hover:bg-red-50 flex-shrink-0"
+                              aria-label={`Delete ${item.name}`}
+                            >
+                              <MdDelete className="text-lg"  onClick={() => delItem(item._id)} />
+                            </button>
 
             </li>
           ))
