@@ -1,8 +1,26 @@
+import { MdDelete } from "react-icons/md";
 import TotalCard from "../cards/TotalCard";
+import axios from "axios";
+import baseURL from "../../services/baseURL";
 
 export default function SalesTable({
-  invoices
+  invoices,
+  refreshInvoices
 }) {
+      
+     const delItem = async (id) => {
+      try {
+        let res = await axios.delete(`${baseURL}/order/api/del-order/${id}`);
+        console.log(res);
+        if (res?.data?.status == "success") {
+          alert("order deleted successfully");
+          refreshInvoices();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden w-full">
 
@@ -46,6 +64,7 @@ export default function SalesTable({
               <th className="text-left px-6 py-3">Customer Name</th>
               <th className="text-left px-6 py-3">Date</th>
               <th className="text-right px-6 py-3">Amount</th>
+              <th className="text-right px-6 py-3">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
@@ -64,6 +83,15 @@ export default function SalesTable({
                   <td className="px-6 py-4 text-gray-600 text-right">
                     Rs. {Number(item.grandTotal).toLocaleString()}
                   </td>
+                  <td className="px-6 py-4 text-right">
+                    <button
+                      onClick={() => onDel?.(item)}
+                      className="text-red-500 hover:text-red-700 transition-colors p-1 rounded-lg hover:bg-red-50 cursor-pointer"
+                      aria-label={`Delete ${item.name}`}
+                    >
+                      <MdDelete className="text-lg" onClick={() => delItem(item._id)} />
+                    </button>
+                  </td>
                 </tr>
               ))
             )}
@@ -72,6 +100,6 @@ export default function SalesTable({
       </div>
 
     </div>
-            
+
   );
 }

@@ -35,7 +35,7 @@ const Sales = () => {
            <h2 className='font-medium text-3xl mb-2 '>Overview</h2>
           <p className='text-gray-500 text-sm'>Track and Manage Your Customers sales and outstanding dues..</p>
           <div className='mt-10'>
-            <SalesTable invoices={invoices}></SalesTable>
+            <SalesTable invoices={invoices} refreshInvoices={getInvoices}></SalesTable>
           </div>
           <div className='flex justify-end mt-10 '>
               <TotalCard total={Total}></TotalCard>
